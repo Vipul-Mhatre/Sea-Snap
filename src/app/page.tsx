@@ -1,12 +1,27 @@
 "use client";
-import Navbar from './components/navbar';
-import Link from 'next/link';
+// import Navbar from './components/navbar';
 import './globals.css';
+import Sidebar from './components/sidebar';
+import User from './databse/user';
+import Navbar from './components/navbar';
+//import { getAuthenticatedAppForUser } from './databse/serverApp';
+import { useState } from 'react';
+import firebase from 'firebase/compat/app';
+import { getUser } from './databse/firebase';
 
 export default function HomePage() {
+
+  const [user, setUser] = useState<User | null>(getUser())
+
   return (
     <>
-        <Navbar className="sticky top-0 z-50 bg-white shadow-md" />
+        {
+          (user != null) && Sidebar(user)
+        }
+        {
+          (user == null) && Navbar()
+        }
+        {/* <Navbar className="sticky top-0 z-50 bg-white shadow-md" /> */}
 
       <main className="min-h-screen bg-gray-50 flex flex-col items-center text-gray-800">
         <header className="header min-h-screen w-full relative flex flex-col justify-center items-center">

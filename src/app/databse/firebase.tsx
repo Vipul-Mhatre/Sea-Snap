@@ -1,7 +1,7 @@
 import { 
   initializeApp, 
 } from "firebase/app";
-import { createUserWithEmailAndPassword, getAuth, getIdToken, onAuthStateChanged as _onAuthStateChanged, signInWithEmailAndPassword, signOut, setPersistence, browserSessionPersistence } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, getIdToken, onAuthStateChanged as _onAuthStateChanged, signInWithEmailAndPassword, signOut, setPersistence, browserSessionPersistence, onAuthStateChanged } from "firebase/auth";
 import User from "./user";
 
 export const firebaseConfig = {
@@ -16,11 +16,12 @@ export const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
+export const auth = getAuth(firebaseApp);
 
 export async function registerUser(email: string, password: string) {
   await createUserWithEmailAndPassword(auth, email, password);
 }
+
 
 export async function login(email: string, password: string) {
   await signInWithEmailAndPassword(auth, email, password);
@@ -30,12 +31,4 @@ export async function logout() {
   await signOut(auth)
 }
 
-export function getUser() {
-  console.log("Current:")
-  console.log(auth.currentUser)
-  if (auth.currentUser == null) {
-    return null
-  } else {
-    return new User(auth.currentUser.uid, "user")
-  }
-}
+

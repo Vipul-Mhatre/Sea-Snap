@@ -4,14 +4,19 @@ import './globals.css';
 import Sidebar from './components/sidebar';
 import User from './databse/user';
 import Navbar from './components/navbar';
-//import { getAuthenticatedAppForUser } from './databse/serverApp';
 import { useState } from 'react';
 import firebase from 'firebase/compat/app';
-import { getUser } from './databse/firebase';
+import { auth, getUser} from './databse/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
 
 export default function HomePage() {
 
-  const [user, setUser] = useState<User | null>(getUser())
+  const [user, setUser] = useState<User | null>(null)
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUser(new User(user.uid, "user"))
+    }
+  })
 
   return (
     <>
@@ -236,4 +241,3 @@ export default function HomePage() {
   );
 }
 
-// 

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import User from '../databse/user';
 
 export default function Navbar() {
   return (
@@ -7,7 +8,7 @@ export default function Navbar() {
         <Link href="/">
           <span className="hover:text-indigo-300">Sea Snap</span>
         </Link>
-      </div>
+      </div> 
       <div className="flex space-x-6">
         <Link href="/auth/login">
           <span className="hover:underline hover:text-indigo-300">Login</span>
@@ -15,7 +16,7 @@ export default function Navbar() {
         <Link href="/auth/signup">
           <span className="hover:underline hover:text-indigo-300">Sign Up</span>
         </Link>
-      </div>
+      </div> 
     </nav>
   );
 }

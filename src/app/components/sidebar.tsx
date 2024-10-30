@@ -1,53 +1,68 @@
+import React from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import User from '../databse/user';
+import { logout } from '../databse/firebase';
 
-export default function Sidebar({ role }) {
-  const router = useRouter();
+const Sidebar = (user: User) => {
 
-  const links = [
+  async function Logout() {
+    await logout()
+    
+  }
+
+  const commonLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Dashboard', path: `/dashboard/${role}` },
     { name: 'Profile', path: '/profile' },
   ];
 
-  if (role === 'admin') {
-    links.push({ name: 'User Management', path: '/dashboard/admin/users' });
-    links.push({ name: 'Reports', path: '/dashboard/admin/reports' });
-  } else if (role === 'collector') {
-    links.push({ name: 'Collection Events', path: '/dashboard/collector/events' });
-    links.push({ name: 'Trash Map', path: '/dashboard/collector/map' });
-  } else if (role === 'user') {
-    links.push({ name: 'Upload Photo', path: '/dashboard/user/upload' });
-    links.push({ name: 'My Reports', path: '/dashboard/user/reports' });
+  const adminLinks = [
+    { name: 'Admin Dashboard', path: '/dashboard/admin' },
+    { name: 'Manage Users', path: '/manage-users' },
+    { name: 'Reports', path: '/reports' },
+  ];
+
+  const collectorLinks = [
+    { name: 'Collector Dashboard', path: '/dashboard/collector' },
+    { name: 'Event Scheduling', path: '/schedule-events' },
+    { name: 'Reports', path: '/collector-reports' },
+  ];
+
+  const userLinks = [
+    { name: 'User Dashboard', path: '/dashboard/user' },
+    { name: 'Upload Image', path: '/upload' },
+    { name: 'Volunteer Actions', path: '/volunteer' },
+  ];
+
+  let linksToRender = commonLinks;
+
+  if (user.role === 'admin') {
+    linksToRender = [...commonLinks, ...adminLinks];
+  } else if (user.role === 'collector') {
+    linksToRender = [...commonLinks, ...collectorLinks];
+  } else if (user.role === 'user') {
+    linksToRender = [...commonLinks, ...userLinks];
   }
 
   return (
-    <aside className="w-64 h-full bg-gray-800 text-white fixed top-0 left-0 flex flex-col">
-      <div className="text-2xl font-bold p-4 border-b border-gray-700">
-        Sea-Snap
-      </div>
-      <nav className="flex-grow">
-        <ul>
-          {links.map((link) => (
-            <li key={link.name} className="border-b border-gray-700">
-              <Link href={link.path}>
-                <a
-                  className={`block py-4 px-6 hover:bg-gray-700 ${
-                    router.pathname === link.path ? 'bg-gray-700' : ''
-                  }`}
-                >
-                  {link.name}
-                </a>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      <div className="p-4 border-t border-gray-700">
-        <button className="w-full bg-red-600 hover:bg-red-700 py-2 px-4 rounded-md">
-          Logout
-        </button>
-      </div>
-    </aside>
+    <div className="h-screen w-60 bg-gray-800 text-white p-4">
+      <h2 className="text-lg font-semibold mb-6">SeaSnap</h2>
+      <ul>
+        {linksToRender.map((link) => (
+          <li key={link.name} className="mb-4">
+            <Link href={link.path}>
+              {link.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <button
+        onClick={Logout()}
+        className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      >
+        Logout
+      </button>
+    </div>
   );
-}
+};
+
+export default Sidebar;

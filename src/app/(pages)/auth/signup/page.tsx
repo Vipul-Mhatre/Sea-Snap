@@ -1,5 +1,5 @@
 "use client";
-import database from "@/app/databse/firebase";
+import { registerUser } from "@/app/databse/firebase";
 import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
 import { FormEvent, useState } from "react";
@@ -12,7 +12,7 @@ export default function LoginPage() {
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     try {
-      await database.registerUser(email, password)
+      await registerUser(email, password)
     } catch (e) {
       setError(e.message)
       setEmail("")

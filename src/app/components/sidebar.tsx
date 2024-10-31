@@ -29,7 +29,7 @@ const Sidebar = (user: User) => {
 
   const userLinks = [
     { name: 'User Dashboard', path: '/dashboard/user' },
-    { name: 'Upload Image', path: '/upload' },
+    { name: 'Upload Image', path: '/upload/upload_video' },
     { name: 'Volunteer Actions', path: '/volunteer' },
   ];
 

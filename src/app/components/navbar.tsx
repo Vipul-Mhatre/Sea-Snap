@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import User from '../databse/user';
 
 export default function Navbar() {
   return (

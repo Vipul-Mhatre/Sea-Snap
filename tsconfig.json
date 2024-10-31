@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
+    // "target": "es6",
+    // "module": "commonjs",
+    // "moduleResolution": "node",
+    // "forceConsistentCasingInFileNames": true,
+    // "baseUrl": "./",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,

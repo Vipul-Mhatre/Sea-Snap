@@ -1,4 +1,5 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+best.pt
+main.py
 
 # dependencies
 /node_modules
